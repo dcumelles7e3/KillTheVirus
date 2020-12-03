@@ -3,9 +3,15 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/** JFrame que conté el Panel i botons
+ * @version 3/12/2020
+ * @author Dídac Cumelles Cenzano
+ */
 public class Frame extends JFrame {
     private Panel panel = new Panel();
 
+    /** El constructor afegeix el Panel i el botons al frame
+     */
     public Frame() {
         setBounds(600, 300, 600, 450);
         setTitle("Kill The Virus");
@@ -20,21 +26,34 @@ public class Frame extends JFrame {
         add(botonera, BorderLayout.SOUTH);
     }
 
+    /** Implementa el Listener del botó Sortir
+     */
     class ClickSortir implements ActionListener {
+        /** Acaba el programa
+         * @param actionEvent Clic al botó
+         */
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             System.exit(0);
         }
     }
 
+    /** Implementa el Listener del botó Start
+     */
     class ClickStart implements ActionListener {
+        /** Crea entre 3 i 7 virus
+         * @param actionEvent Clic al botó
+         */
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             for (int i = 0; i<Virus.getRandom(3,7);i++){
+                Runnable vir= () -> crearVirus();
                 crearVirus();
             }
         }
 
+        /** Crea i afegeix un Virus(Runnable) un Threa
+         */
         public void crearVirus(){
             Virus v = new Virus(panel);
             Thread t = new Thread(v);

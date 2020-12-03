@@ -1,17 +1,14 @@
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class Panel extends JPanel implements MouseListener {
     private int x, y;
     private ArrayList<Virus> virus = new ArrayList<>();
     private int morts = 0;
-    JLabel label = new JLabel();
+    private JLabel label = new JLabel();
 
     public void add(Virus v) {
         virus.add(v);
