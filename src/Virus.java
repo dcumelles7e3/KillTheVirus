@@ -6,6 +6,10 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 
+/** Classe Runnable que representa un Virus i conté coordenades, mida, velocitat i les imatges
+ * @version 3/12/2020
+ * @author Dídac Cumelles Cenzano
+ */
 public class Virus implements Runnable{
     private double x, y, dx, dy;
     private int radi;
@@ -14,10 +18,19 @@ public class Virus implements Runnable{
 
     private static JPanel panel;
 
+    /** Funció per a obtenir un int aleatori comprés entre dos parámetres
+     * @param min Número minim (inclós)
+     * @param max Número màxim (inclós)
+     * @return Número aleatori
+     */
     public static int getRandom(int min, int max) {
         return (int)Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
+    /**
+     *
+     * @param pan
+     */
     public Virus(JPanel pan) {
         panel = pan;
         x=getRandom(10,400);

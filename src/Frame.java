@@ -11,6 +11,7 @@ public class Frame extends JFrame {
     private Panel panel = new Panel();
 
     /** El constructor afegeix el Panel i el botons al frame
+     * @see Panel
      */
     public Frame() {
         setBounds(600, 300, 600, 450);
@@ -47,12 +48,13 @@ public class Frame extends JFrame {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             for (int i = 0; i<Virus.getRandom(3,7);i++){
-                Runnable vir= () -> crearVirus();
-                crearVirus();
+                Runnable crear = () -> crearVirus();
+                crear.run();
             }
         }
 
-        /** Crea i afegeix un Virus(Runnable) un Threa
+        /** Comença un Thread amb un Virus(Runnable) i l'afegeix al Panel
+         * @see Virus
          */
         public void crearVirus(){
             Virus v = new Virus(panel);
