@@ -7,7 +7,7 @@ public class Frame extends JFrame {
     private Panel panel = new Panel();
 
     public Frame() {
-        setBounds(600, 300, 400, 350);
+        setBounds(600, 300, 600, 450);
         setTitle("Kill The Virus");
         add(panel, BorderLayout.CENTER);
         JPanel botonera = new JPanel();
@@ -30,6 +30,12 @@ public class Frame extends JFrame {
     class ClickStart implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
+            for (int i = 0; i<Virus.getRandom(3,7);i++){
+                crearVirus();
+            }
+        }
+
+        public void crearVirus(){
             Virus v = new Virus(panel);
             Thread t = new Thread(v);
             t.start();

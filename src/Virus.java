@@ -1,22 +1,44 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.net.URL;
 
 public class Virus implements Runnable{
-    private double x = 0; //perquè la funció ellipse utilitza double
-    private double y = 0;
-    private double dx = 0.1;
-    private double dy = 0.1;
-    private int radi = 15;;
-    private Image imatge;
+    private double x, y, dx, dy;
+    private int radi;
+    private Image imatge, imatgeMort;
     private boolean alive = true;
 
     private static JPanel panel;
 
+    public static int getRandom(int min, int max) {
+        return (int)Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
     public Virus(JPanel pan) {
         panel = pan;
+        x=getRandom(10,400);
+        y=getRandom(10,300);
+        radi=getRandom(30,60);
+
+        dx=Math.random();
+        if (getRandom(0,1)==0) dx=-dx;
+        dy=Math.random();
+        if (getRandom(0,1)==0) dy=-dy;
+
+        try {
+            BufferedImage bfViu = ImageIO.read(getClass().getResource("virus.png"));
+            BufferedImage bfMort = ImageIO.read(getClass().getResource("deadvirus.png"));
+            imatge = bfViu.getScaledInstance(radi,radi,Image.SCALE_DEFAULT);
+            imatgeMort = bfMort.getScaledInstance(radi-10,radi-10,Image.SCALE_DEFAULT);
+        }catch (IOException io){
+            System.out.println("Resource d'imatge no trobat.");
+        }
+
     }
 
     public void moure() {
@@ -40,10 +62,6 @@ public class Virus implements Runnable{
         }while(this.alive);
     }
 
-    public Ellipse2D dibuixar() {
-        return new Ellipse2D.Double(x, y, radi, radi);
-    }
-
     public void matar(){
         this.alive=false;
     }
@@ -52,58 +70,23 @@ public class Virus implements Runnable{
         return x;
     }
 
-    public void setX(double x) {
-        this.x = x;
-    }
-
     public double getY() {
         return y;
-    }
-
-    public void setY(double y) {
-        this.y = y;
-    }
-
-    public double getDx() {
-        return dx;
-    }
-
-    public void setDx(double dx) {
-        this.dx = dx;
-    }
-
-    public double getDy() {
-        return dy;
-    }
-
-    public void setDy(double dy) {
-        this.dy = dy;
     }
 
     public double getRadi() {
         return radi;
     }
 
-    public void setRadi(int radi) {
-        this.radi = radi;
-    }
-
     public Image getImatge() {
         return imatge;
     }
 
-    public void setImatge(Image imatge) {
-        this.imatge = imatge;
+    public Image getImatgeMort() {
+        return imatgeMort;
     }
 
     public boolean isAlive() {
         return alive;
     }
-
-    public void setAlive(boolean alive) {
-        this.alive = alive;
-    }
-
-
-
 }

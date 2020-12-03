@@ -1,29 +1,40 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Panel extends JPanel implements MouseListener {
+    private int x, y;
+    private ArrayList<Virus> virus = new ArrayList<>();
+    private int morts = 0;
+    JLabel label = new JLabel();
 
-    private int x,y;
-    private ArrayList<Virus> virus = new ArrayList<Virus>();
-    public void add(Virus v){
+    public void add(Virus v) {
         virus.add(v);
     }
 
-    public Panel(){
+    public Panel() {
         addMouseListener(this);
+        add(label, BorderLayout.NORTH);
     }
+
     @Override
     public void paint(Graphics g) {
         super.paint(g);
+        label.setText("Virus morts: " + morts);
 
         Graphics2D g2 = (Graphics2D) g;
         for (Virus v : virus) {
-            g2.fill(v.dibuixar());
+            if (v.isAlive()) {
+                g2.drawImage(v.getImatge(), (int) v.getX(), (int) v.getY(), this);
+            } else {
+                g2.drawImage(v.getImatgeMort(), (int) v.getX(), (int) v.getY(), this);
+            }
         }
-
         Toolkit.getDefaultToolkit().sync();
     }
 
@@ -31,16 +42,19 @@ public class Panel extends JPanel implements MouseListener {
     public void mouseClicked(MouseEvent mouseEvent) {
         x = mouseEvent.getX();
         y = mouseEvent.getY();
-        //printa per consola les coordenades del mouse en format (x,y)
-        System.out.println("(" + x + "," + y + ")");
 
-        double incx=x+15;
-        double decx=x-15;
-        double incy=y+15;
-        double decy=y-15;
         for (Virus v : virus) {
-            if (v.getX()<=incx&&v.getX()>=decx&&v.getY()<=incy&&v.getY()>=decy){
-                v.matar();
+            if (v.isAlive()) {
+                //Creem un "hitbox" del virus
+                double radi = v.getRadi();
+                double vx = v.getX();
+                double vy = v.getY();
+                double border = radi / 4 + 8;
+
+                if (x < vx + radi + border / 3 && x > vx - border && y < vy + radi + border / 3 && y > vy - border) {
+                    v.matar();
+                    morts++;
+                }
             }
         }
         repaint(); //es crida a paint()
