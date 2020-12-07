@@ -18,7 +18,7 @@ public class Virus implements Runnable{
 
     private static JPanel panel;
 
-    /** Funció per a obtenir un int aleatori comprés entre dos parámetres
+    /** Funció per a obtenir un int aleatori comprés entre dos (inclosos)
      * @param min Número minim (inclós)
      * @param max Número màxim (inclós)
      * @return Número aleatori
@@ -27,9 +27,10 @@ public class Virus implements Runnable{
         return (int)Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
-    /**
-     *
-     * @param pan
+    /** El constructor posiciona el Virus a unes coordenades random del Panel, amb un radi i velocitat aleatoris.
+     * També carrega les imatges.
+     * @param pan Panel static del Frame
+     * @see Frame
      */
     public Virus(JPanel pan) {
         panel = pan;
@@ -53,6 +54,8 @@ public class Virus implements Runnable{
 
     }
 
+    /** Funció que crida constantment el run que canvia les coordenades amb control de límits
+     */
     public void moure() {
         Rectangle2D limits=panel.getBounds();
         double width = limits.getWidth();
@@ -63,6 +66,8 @@ public class Virus implements Runnable{
         if (y + radi / 2 > height || y + radi / 2 < 0) dy = -dy;
     }
 
+    /** Loop que mou el Virus i repinta el Panel mentre el Virus estigui viu
+     */
     @Override
     public void run() {
         do {
@@ -74,30 +79,50 @@ public class Virus implements Runnable{
         }while(this.alive);
     }
 
+    /** Funció per a establir que un Virus ha mort
+     */
     public void matar(){
         this.alive=false;
     }
 
+    /** Getter de x
+     * @return x
+     */
     public double getX() {
         return x;
     }
 
+    /** Getter de y
+     * @return y
+     */
     public double getY() {
         return y;
     }
 
+    /** Getter de radi
+     * @return radi
+     */
     public double getRadi() {
         return radi;
     }
 
+    /** Getter d'imatge viu
+     * @return imatge
+     */
     public Image getImatge() {
         return imatge;
     }
 
+    /** Getter d'imatge mort
+     * @return imatge
+     */
     public Image getImatgeMort() {
         return imatgeMort;
     }
 
+    /** Per a comprovar si el Virus encara està viu
+     * @return estat alive
+     */
     public boolean isAlive() {
         return alive;
     }

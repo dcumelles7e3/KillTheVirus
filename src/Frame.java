@@ -42,7 +42,7 @@ public class Frame extends JFrame {
     /** Implementa el Listener del botó Start
      */
     class ClickStart implements ActionListener {
-        /** Crea entre 3 i 7 virus
+        /** Crea entre 3 i 7 virus amb un Runnable lambda
          * @param actionEvent Clic al botó
          */
         @Override
@@ -55,6 +55,7 @@ public class Frame extends JFrame {
 
         /** Comença un Thread amb un Virus(Runnable) i l'afegeix al Panel
          * @see Virus
+         * @see Panel
          */
         public void crearVirus(){
             Virus v = new Virus(panel);
